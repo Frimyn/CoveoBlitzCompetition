@@ -27,6 +27,7 @@ public class Bot
             .Where(crewmate => crewmate.CurrentStation == null && crewmate.Destination == null)
             .ToList();
 
+        
 
 
         /*  There will be some code that will set the priorities of jobs */

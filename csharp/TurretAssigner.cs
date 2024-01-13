@@ -11,8 +11,11 @@ namespace Application
         
         public static Vector AimTurretProperly(TurretStation turretStation, GameMessage gameMessage, bool isInDanger)
         {
-            //Determine type of turret
+            //Aim
+            if (isInDanger)
+            {
 
+            }
 
 
 
