@@ -19,22 +19,33 @@ class Bot:
 
         team_id = game_message.currentTeamId
         my_ship = game_message.ships.get(team_id)
+
         other_ships_ids = [shipId for shipId in game_message.shipsPositions.keys() if shipId != team_id]
 
         operatedTurretStations = [station for station in my_ship.stations.turrets if station.operator is not None]
         for turret_station in operatedTurretStations:
-            possible_actions = [
-                # Charge the turret.
-                TurretChargeAction(turret_station.id),
-                # Aim the turret itself.
-                TurretLookAtAction(turret_station.id, 
-                                   Vector(random.uniform(0, game_message.constants.world.width), random.uniform(0, game_message.constants.world.height))
-                ),
-                # Shoot!
-                TurretShootAction(turret_station.id)
-            ]
+            
+            if game_message.constants.ship.stations.turretInfos[turret_station.turretType].rotatable == True :
+                shiptotargetid = random.choice(other_ships_ids)
+                ships_to_destroy = game_message.shipsPositions[shiptotargetid]
+                actions.append(TurretLookAtAction(turret_station.id, ships_to_destroy))
+            
+            if turret_station.charge <= 0 :
+                actions.append(TurretChargeAction(turret_station.id))
+            else :
+                actions.append(TurretShootAction(turret_station.id))
+            # possible_actions = [
+            #     # Charge the turret.
+            #     TurretChargeAction(turret_station.id),
+            #     # Aim the turret itself.
+            #     TurretLookAtAction(turret_station.id, 
+            #                        Vector(random.uniform(0, game_message.constants.world.width), random.uniform(0, game_message.constants.world.height))
+            #     ),
+            #     # Shoot!
+            #     TurretShootAction(turret_station.id)
+            # ]
 
-            actions.append(random.choice(possible_actions))
+            # actions.append(random.choice(possible_actions))
 
         operatedHelmStation = [station for station in my_ship.stations.helms if station.operator is not None]
         
