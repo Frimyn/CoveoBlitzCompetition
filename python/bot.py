@@ -1,12 +1,14 @@
 from game_message import *
-from python.crew_movement import *
+from crew_movement import *
 from danger_detection import *
 from actions import *
+from crew_movement import *
 import random
 
 class Bot:
     def __init__(self):
         print("Initializing your super mega duper bot")
+        self.crew_movement = CrewMovement()
 
 
     def get_next_move(self, game_message: GameMessage):
@@ -53,6 +55,10 @@ class Bot:
         operatedRadarStation = [station for station in my_ship.stations.radars if station.operator is not None]
         for radar_station in operatedRadarStation:
             actions.append(RadarScanAction(radar_station.id, random.choice(other_ships_ids)))
+
+        # Get crew actions from CrewMovement
+        crew_actions = self.crew_movement.send_crew_to_battlestations(game_message)
+        actions.extend(crew_actions)
 
         # You can clearly do better than the random actions above! Have fun!
         return actions
