@@ -2,7 +2,6 @@ from game_message import *
 from crew_movement import *
 from danger_detection import *
 from actions import *
-from crew_movement import *
 import random
 
 class Bot:
@@ -10,11 +9,7 @@ class Bot:
         print("Initializing your super mega duper bot")
         self.crew_movement = CrewMovement()
 
-
     def get_next_move(self, game_message: GameMessage):
-        """
-        Here is where the magic happens, for now the moves are not very good. I bet you can do better ;)
-        """
         actions = []
 
         team_id = game_message.currentTeamId
@@ -24,8 +19,8 @@ class Bot:
         # Find who's not doing anything and try to give them a job?
         idle_crewmates = [crewmate for crewmate in my_ship.crew if crewmate.currentStation is None and crewmate.destination is None]
 
-        if idle_crewmates.count == crewmate.count :
-            actions = crew_movement.send_crew_to_battlestations(game_message)
+        if len(idle_crewmates) == len(my_ship.crew):
+            actions.extend(self.crew_movement.send_crew_to_battlestations(game_message))
             
         for crewmate in idle_crewmates:
             visitable_stations = crewmate.distanceFromStations.shields + crewmate.distanceFromStations.turrets + crewmate.distanceFromStations.helms + crewmate.distanceFromStations.radars
