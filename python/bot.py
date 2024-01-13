@@ -1,5 +1,5 @@
 from game_message import *
-from crew_movement import *
+from python.crew_movement import *
 from danger_detection import *
 from actions import *
 import random

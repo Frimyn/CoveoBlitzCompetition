@@ -1,3 +1,5 @@
+from game_message import *
+
 class crew_movement:
     def __init__(self) -> None:
         
