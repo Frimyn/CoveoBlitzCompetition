@@ -13,6 +13,7 @@ class CrewMovement:
         # Assuming there are 4 crew members and 4 station types
         crew_types = ['turret', 'shield', 'helm']
 
+        # Send crew members to other stations based on the original logic
         for i, crew_member in enumerate(my_ship.crew):
             crew_type = crew_types[i % len(crew_types)]  # Cycle through the types
 
@@ -31,5 +32,27 @@ class CrewMovement:
             if shortest_distance_station:
                 destination = shortest_distance_station.stationPosition
                 actions.append(CrewMoveAction(crew_member.id, destination))
+
+        # Check if there is no one operating the helm station
+        helm_station_operators = [station.operator for station in my_ship.stations.helms]
+        if None in helm_station_operators:
+            # Find a crew member that is not already assigned to a station
+            unassigned_crew = [crew_member for crew_member in my_ship.crew if crew_member.currentStation is TurretStation]
+
+            if unassigned_crew:
+                # Send the first unassigned crew member to the helm station
+                destination = my_ship.stations.helms[0].gridPosition
+                actions.append(CrewMoveAction(unassigned_crew[0].id, destination))
+
+        # Check if there is no one operating the turrets station
+        turrets_station_operators = [station.operator for station in my_ship.stations.turrets]
+        if None in turrets_station_operators:
+            # Find a crew member that is not already assigned to a station
+            unassigned_crew = [crew_member for crew_member in my_ship.crew if crew_member.currentStation is ShieldConstants]
+
+            if unassigned_crew:
+                # Send the first unassigned crew member to the helm station
+                destination = my_ship.stations.shields[0].gridPosition
+                actions.append(CrewMoveAction(unassigned_crew[0].id, destination))
 
         return actions
