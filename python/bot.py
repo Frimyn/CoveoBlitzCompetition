@@ -1,5 +1,5 @@
 from game_message import *
-from crew_movement import *
+from python.crew_movement import *
 from danger_detection import *
 from actions import *
 import random
@@ -48,7 +48,7 @@ class Bot:
 
         operatedHelmStation = [station for station in my_ship.stations.helms if station.operator is not None]
         if operatedHelmStation:
-            actions.append(ShipRotateAction(random.uniform(0, 360)))
+            actions.append(ShipRotateAction(45.0))
 
         operatedRadarStation = [station for station in my_ship.stations.radars if station.operator is not None]
         for radar_station in operatedRadarStation:
