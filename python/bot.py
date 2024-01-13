@@ -16,16 +16,16 @@ class Bot:
         my_ship = game_message.ships.get(team_id)
         other_ships_ids = [shipId for shipId in game_message.shipsPositions.keys() if shipId != team_id]
 
-        # Find who's not doing anything and try to give them a job?
-        idle_crewmates = [crewmate for crewmate in my_ship.crew if crewmate.currentStation is None and crewmate.destination is None]
+        # # Find who's not doing anything and try to give them a job?
+        # idle_crewmates = [crewmate for crewmate in my_ship.crew if crewmate.currentStation is None and crewmate.destination is None]
 
-        if len(idle_crewmates) == len(my_ship.crew):
-            actions.extend(self.crew_movement.send_crew_to_battlestations(game_message))
+        # if len(idle_crewmates) == len(my_ship.crew):
+        #     actions.extend(self.crew_movement.send_crew_to_battlestations(game_message))
             
-        for crewmate in idle_crewmates:
-            visitable_stations = crewmate.distanceFromStations.shields + crewmate.distanceFromStations.turrets + crewmate.distanceFromStations.helms + crewmate.distanceFromStations.radars
-            station_to_move_to = random.choice(visitable_stations)
-            actions.append(CrewMoveAction(crewmate.id, station_to_move_to.stationPosition))
+        # for crewmate in idle_crewmates:
+        #     visitable_stations = crewmate.distanceFromStations.shields + crewmate.distanceFromStations.turrets + crewmate.distanceFromStations.helms + crewmate.distanceFromStations.radars
+        #     station_to_move_to = random.choice(visitable_stations)
+        #     actions.append(CrewMoveAction(crewmate.id, station_to_move_to.stationPosition))
 
         # Now crew members at stations should do something!
         operatedTurretStations = [station for station in my_ship.stations.turrets if station.operator is not None]
