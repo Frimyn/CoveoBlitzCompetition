@@ -22,6 +22,9 @@ class Bot:
         # Find who's not doing anything and try to give them a job?
         idle_crewmates = [crewmate for crewmate in my_ship.crew if crewmate.currentStation is None and crewmate.destination is None]
 
+        if idle_crewmates.count == crewmate.count :
+            actions = crew_movement.send_crew_to_battlestations(game_message)
+            
         for crewmate in idle_crewmates:
             visitable_stations = crewmate.distanceFromStations.shields + crewmate.distanceFromStations.turrets + crewmate.distanceFromStations.helms + crewmate.distanceFromStations.radars
             station_to_move_to = random.choice(visitable_stations)
