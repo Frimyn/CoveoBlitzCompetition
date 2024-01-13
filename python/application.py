@@ -5,8 +5,8 @@ import dataclasses
 import json
 import os
 import traceback
-
 import cattrs
+
 import websockets
 
 from bot import Bot
