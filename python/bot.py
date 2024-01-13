@@ -43,7 +43,7 @@ class Bot:
 
         operatedHelmStation = [station for station in my_ship.stations.helms if station.operator is not None]
         if operatedHelmStation:
-            actions.append(ShipRotateAction(random.uniform(0, 360)))
+            actions.append(ShipRotateAction(45.0))
 
         operatedRadarStation = [station for station in my_ship.stations.radars if station.operator is not None]
         for radar_station in operatedRadarStation:
